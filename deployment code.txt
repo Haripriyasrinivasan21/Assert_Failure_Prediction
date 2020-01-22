@@ -1,0 +1,27 @@
+from watson_machine_learning_client import WatsonMachineLearningAPIClient
+
+wml_credentials={
+    "url":"https://eu-gb.ml.cloud.ibm.com",
+    "access_key":"yWsHFKDUpOHRe7XsfT6oBOq34BteoCbQ8FNngBikFSbQ",
+    "username":"47395f8f-92e2-4777-91aa-c293f043243e",
+    "password":"2d2510dc-d02d-4a6d-84d8-43bc61e4c791",
+    "instance_id":"0140ddcd-dad2-4443-bbf5-478cf3ecc0c4"
+}
+
+
+client=WatsonMachineLearningAPIClient(wml_credentials)
+
+model_props={client.repository.ModelMetaNames.AUTHOR_NAME:"MUNI",
+             client.repository.ModelMetaNames.AUTHOR_EMAIL:"abcd@gmail.com",
+             client.repository.ModelMetaNames.NAME:"DecisionTreeRegressor"
+             
+             }
+
+
+model_artifact=client.repository.store_model(regressor,meta_props=model_props)
+
+published_model_uid=client.repository.get_model_uid(model_artifact)
+
+created_deployment=client.deployments.create(published_model_uid,name='DecisionTreeRegressor')
+
+scoring_endpoint=client.deployments.get_scoring_url(create_deployment)
